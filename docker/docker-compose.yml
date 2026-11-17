@@ -1,0 +1,49 @@
+# Horizon Imager: the app (serves HTTPS itself) + PostgreSQL
+#
+#   1. cp .env.example .env   and set SECRET_KEY, AD_ENCRYPTION_KEY and POSTGRES_PASSWORD
+#   2. docker compose up -d
+#   3. open https://localhost   (self-signed certificate at first; install your own in Settings, Security)
+#      setup token:  docker compose exec app cat /data/setup-token.txt
+#
+# Update:  set EUC_VERSION in .env (or leave it on latest), then  docker compose pull && docker compose up -d
+#
+# To use SQL Server instead of PostgreSQL, set DATABASE_URL in .env, e.g.
+#   DATABASE_URL=mssql://user:pass@sqlhost:1433/euc_imager
+# and start only the app:  docker compose up -d app
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: euc_imager
+      POSTGRES_USER: euc_imager
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U euc_imager -d euc_imager"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    image: ghcr.io/terasguy/euc-imager:${EUC_VERSION:-1.1.0}
+    restart: unless-stopped
+    environment:
+      RESTART_ON_EXIT: "1"
+      HTTPS_PUBLIC_PORT: ${HTTPS_PORT:-443}   # the port browsers use: the plain-HTTP redirect points there
+      SECRET_KEY: ${SECRET_KEY:?set SECRET_KEY in .env}
+      AD_ENCRYPTION_KEY: ${AD_ENCRYPTION_KEY:?set AD_ENCRYPTION_KEY in .env}
+      DATABASE_URL: ${DATABASE_URL:-postgresql://euc_imager:${POSTGRES_PASSWORD}@db:5432/euc_imager}
+    volumes:
+      - appdata:/data
+    ports:
+      - "${HTTPS_PORT:-443}:8443"
+      - "${HTTP_PORT:-80}:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  appdata:

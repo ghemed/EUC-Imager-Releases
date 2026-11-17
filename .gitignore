@@ -1,0 +1,5 @@
+# Installers are attached to GitHub Releases, not committed
+dist/
+*.exe
+*.zip
+.env
