@@ -15,6 +15,8 @@ Press **Esc** to close the pop-up window on top (a dialog that is busy, such as 
 An **environment** groups the vCenters and Horizon pods that belong together. The selector at the top
 of the sidebar switches between them. **Global View** shows everything at once; there, pool names carry
 their environment in brackets, for example `Windows 10 (Lab)`, so equal names can be told apart.
+The selected environment is kept when you reload the page, and a bar under the header always shows
+which one you are viewing (or *Global view*), so you do not mix them up.
 
 ## Dashboard
 
@@ -69,12 +71,19 @@ Click a pool. The header shows its status, **Image drift**, Global Entitlement, 
 * **Current base image** shows the snapshot the pool runs. If only an ID appears, the name could not
   be resolved: sync the master images and the pools, and check the vCenter folder filter includes the VM.
 * **Last Push** is recorded when you push from this app and, when Horizon reports one, from Horizon.
+* While a push runs, a bar at the top shows its progress in percent, the same as the Pools table.
 
 ### Push image
 
 Select pools, then **Push Image**. Pick the master image and snapshot (one for all pools or one per pool),
-a schedule, and confirm. Every pool is checked first (the snapshot must exist on the chosen image);
+a schedule, and confirm. With one pool selected the wizard starts at pool selection, so there is no
+strategy step. The *Current* badge marks the snapshot the selected pools already run.
+Every pool is checked first (the snapshot must exist on the chosen image);
 Horizon's own error text is shown if it refuses. By default the push waits for users to log off.
+
+To push from the image side, open the snapshot's **Deploy** on Master Images. It lists the Instant Clone
+pools of the image's environment (in the Global view, of the environments that hold the image's vCenter).
+Pools that already use the image are listed first.
 
 ## Master Images
 

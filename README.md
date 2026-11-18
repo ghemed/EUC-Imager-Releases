@@ -69,8 +69,9 @@ Everything the app stores (database for SQLite, keys, certificate) is in the `ap
 </table>
 
 Also: an **in-browser VM console** that works without any network path from users to ESXi hosts, **automatic
-synchronisation** of data older than a configurable number of hours, an **alert center**, **multiple environments** (each
-with its vCenters and Horizon pods) with a Global View, and **dark mode**.
+synchronisation** of data older than a configurable number of hours, an **alert center** and a **task indicator** that
+shows whether a sync, replication or image push is running, **multiple environments** (each with its vCenters and Horizon
+pods) with a Global View, and **dark mode**.
 
 <p align="center">
   <img src="screenshots/dashboard-dark.png" alt="Dashboard in dark mode" width="860">

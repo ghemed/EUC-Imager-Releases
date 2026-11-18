@@ -4,6 +4,13 @@ Notable changes, newest first. Versions follow `build_package/version.txt`.
 
 ## 1.1.0 (2026-11-17)
 
+**Push image and environments**
+* Master Images: **Deploy** lists the Instant Clone pools of the image's environment (in the Global view, the environments that hold the image's vCenter). Pools that already use the image are listed first.
+* Push Image wizard: the *Current* badge marks the snapshot the selected pools already run. With one pool selected the strategy step is skipped.
+* The pool window shows a running image push with its progress, like the Pools table.
+* The selected environment is remembered across page reloads. A bar under the header shows the current environment, or *Global view*.
+* A VM console tab is titled with the master image name.
+
 **HTTPS**
 * The Imager serves HTTPS itself; nginx is no longer part of the Windows installer or the Docker setup. Port 80 only redirects to HTTPS.
 * Install your own certificate in Settings, Security, Server certificate: upload PEM or PFX, or create a signing request on the server and install the answer. A restart (button in the same card) applies it.
