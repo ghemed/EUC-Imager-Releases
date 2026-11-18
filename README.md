@@ -37,20 +37,35 @@ HTTPS itself.
 
 ### Docker
 
-Docker Desktop (or Docker Engine on Linux) must be running. In **Windows PowerShell** use `curl.exe`, because `curl` there is a different command:
+Needs Docker Desktop (Windows, macOS) or Docker Engine with Compose v2 (Linux), running. Nothing else: the keys are made by the image itself, so Python is not needed.
+
+**Windows PowerShell**
 
 ```powershell
+mkdir euc-imager; cd euc-imager
 curl.exe -O https://raw.githubusercontent.com/ghemed/EUC-Imager-Releases/main/docker/docker-compose.yml
 curl.exe -O https://raw.githubusercontent.com/ghemed/EUC-Imager-Releases/main/docker/.env.example
-Copy-Item .env.example .env    # then set SECRET_KEY, AD_ENCRYPTION_KEY and POSTGRES_PASSWORD in .env
+Copy-Item .env.example .env
+docker run --rm ghcr.io/ghemed/euc-imager:1.1.0 python -c "import secrets; print(secrets.token_urlsafe(48))"
+docker run --rm ghcr.io/ghemed/euc-imager:1.1.0 python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+notepad .env
 docker compose up -d
 ```
 
-On Linux or macOS, the same commands work with `curl -O` and `cp .env.example .env`.
+**Linux or macOS**: the same, with `curl -O` and `cp .env.example .env` instead of the first lines.
 
-If ports 443 or 80 are already used on the host, set `HTTPS_PORT` and `HTTP_PORT` in `.env` (for example `8443` and `8080`) and open the console on that port.
+In `.env`, paste the first generated value after `SECRET_KEY=`, the second after `AD_ENCRYPTION_KEY=`, and choose a password after `POSTGRES_PASSWORD=`. Keep `AD_ENCRYPTION_KEY` safe: without it the stored vCenter and Horizon passwords cannot be read again.
 
-Open `https://localhost` (or the port you set) and find the setup token with `docker compose exec app cat /data/setup-token.txt`.
+Wait about a minute, then open `https://localhost` and accept the self-signed certificate warning (you can install your own later in *Settings, Security*). The setup wizard asks for the setup token:
+
+```powershell
+docker compose exec app cat /data/setup-token.txt
+```
+
+If ports 443 or 80 are already used on the host, set `HTTPS_PORT` and `HTTP_PORT` in `.env` (for example `8443` and `8080`), restart with `docker compose up -d`, and open the console on that port.
+
+Update to a new version: `docker compose pull` then `docker compose up -d` (set `EUC_VERSION` in `.env` to pick the version). Stop with `docker compose down`; the data stays in the `appdata` and `pgdata` volumes. `docker compose down -v` deletes that data.
+
 Everything the app stores (database for SQLite, keys, certificate) is in the `appdata` volume; PostgreSQL has its own.
 
 ## What it does
