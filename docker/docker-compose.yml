@@ -27,7 +27,7 @@ services:
       retries: 10
 
   app:
-    image: ghcr.io/terasguy/euc-imager:${EUC_VERSION:-1.1.0}
+    image: ghcr.io/ghemed/euc-imager:${EUC_VERSION:-1.1.0}
     restart: unless-stopped
     environment:
       RESTART_ON_EXIT: "1"
