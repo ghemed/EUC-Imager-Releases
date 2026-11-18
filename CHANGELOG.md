@@ -11,6 +11,10 @@ Notable changes, newest first. Versions follow `build_package/version.txt`.
 * The selected environment is remembered across page reloads. A bar under the header shows the current environment, or *Global view*.
 * A VM console tab is titled with the master image name.
 
+**Installer**
+* A port page lets you choose the HTTPS port and the HTTP redirect port (defaults 443 and 80; 0 turns the redirect off). The installer checks both before it continues: if another program uses a port, it offers a free one instead. Ports used by an earlier install of the Imager are kept on upgrade.
+* The chosen ports are set for the service and in the Windows Firewall rule.
+
 **HTTPS**
 * The Imager serves HTTPS itself; nginx is no longer part of the Windows installer or the Docker setup. Port 80 only redirects to HTTPS.
 * Install your own certificate in Settings, Security, Server certificate: upload PEM or PFX, or create a signing request on the server and install the answer. A restart (button in the same card) applies it.
