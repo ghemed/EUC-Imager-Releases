@@ -14,6 +14,7 @@ Notable changes, newest first. Versions follow `build_package/version.txt`.
 **Installer**
 * A port page lets you choose the HTTPS port and the HTTP redirect port (defaults 443 and 80; 0 turns the redirect off). The installer checks both before it continues: if another program uses a port, it offers a free one instead. Ports used by an earlier install of the Imager are kept on upgrade.
 * The chosen ports are set for the service and in the Windows Firewall rule.
+* A desktop shortcut, "EUC Imager", opens the web console with the Imager's logo as its icon. It is created unless you untick it on the Select Additional Tasks page.
 
 **HTTPS**
 * The Imager serves HTTPS itself; nginx is no longer part of the Windows installer or the Docker setup. Port 80 only redirects to HTTPS.
