@@ -37,14 +37,20 @@ HTTPS itself.
 
 ### Docker
 
-```bash
-curl -O https://raw.githubusercontent.com/ghemed/EUC-Imager-Releases/main/docker/docker-compose.yml
-curl -O https://raw.githubusercontent.com/ghemed/EUC-Imager-Releases/main/docker/.env.example
-cp .env.example .env     # set SECRET_KEY, AD_ENCRYPTION_KEY and POSTGRES_PASSWORD
+Docker Desktop (or Docker Engine on Linux) must be running. In **Windows PowerShell** use `curl.exe`, because `curl` there is a different command:
+
+```powershell
+curl.exe -O https://raw.githubusercontent.com/ghemed/EUC-Imager-Releases/main/docker/docker-compose.yml
+curl.exe -O https://raw.githubusercontent.com/ghemed/EUC-Imager-Releases/main/docker/.env.example
+Copy-Item .env.example .env    # then set SECRET_KEY, AD_ENCRYPTION_KEY and POSTGRES_PASSWORD in .env
 docker compose up -d
 ```
 
-Open `https://localhost` and find the setup token with `docker compose exec app cat /data/setup-token.txt`.
+On Linux or macOS, the same commands work with `curl -O` and `cp .env.example .env`.
+
+If ports 443 or 80 are already used on the host, set `HTTPS_PORT` and `HTTP_PORT` in `.env` (for example `8443` and `8080`) and open the console on that port.
+
+Open `https://localhost` (or the port you set) and find the setup token with `docker compose exec app cat /data/setup-token.txt`.
 Everything the app stores (database for SQLite, keys, certificate) is in the `appdata` volume; PostgreSQL has its own.
 
 ## What it does
