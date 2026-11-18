@@ -11,7 +11,7 @@ sign-in through Active Directory, role-based permissions and a full audit log.
 
 This repository holds the **ready-to-run releases**: the Windows installer, a Docker Compose file and the
 documentation. Download, install, open the page in your browser, and a setup wizard does the rest. The source code is
-in [TerasGuy/EUC-Imager](https://github.com/TerasGuy/EUC-Imager).
+private and is not published here.
 
 ## Get it
 
@@ -172,7 +172,7 @@ activity log.
 
 ## Support
 
-Questions and problems: open an [issue](https://github.com/TerasGuy/EUC-Imager/issues) in the source repository. Include
+Questions and problems: open an [issue](https://github.com/ghemed/EUC-Imager-Releases/issues) in this repository. Include
 the version (shown in the installer and in the release name), what you did and what the Activity Log or the server log says; never
 paste passwords or the contents of the data folder.
 

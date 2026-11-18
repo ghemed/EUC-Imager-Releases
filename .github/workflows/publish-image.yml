@@ -1,12 +1,12 @@
 name: Publish Docker image
 
-# Builds the Imager from the source repository (TerasGuy/EUC-Imager) and publishes
+# Builds the Imager from the source repository (ghemed/EUC-Imager) and publishes
 #   ghcr.io/ghemed/euc-imager:<version>  and  :latest
 # It runs when a version tag such as v1.1.0 is pushed to this repository, or by hand:
 # Actions, Publish Docker image, Run workflow, with the tag of the source to build (for example v1.1.0).
 #
-# Secret needed in this repository: SOURCE_READ_TOKEN, a fine-grained personal access token of the TerasGuy account
-# with read-only "Contents" access to the single repository TerasGuy/EUC-Imager. It only lets this job read the source.
+# Secret needed in this repository: SOURCE_READ_TOKEN, a fine-grained personal access token of the ghemed account
+# with read-only "Contents" access to the single repository ghemed/EUC-Imager. It only lets this job read the source.
 # The image is pushed with this repository's own GITHUB_TOKEN, so no broad package token is stored anywhere.
 
 on:
@@ -42,7 +42,7 @@ jobs:
       - name: Check out the source
         uses: actions/checkout@v4
         with:
-          repository: TerasGuy/EUC-Imager
+          repository: ghemed/EUC-Imager
           ref: ${{ steps.meta.outputs.tag }}
           token: ${{ secrets.SOURCE_READ_TOKEN }}
 

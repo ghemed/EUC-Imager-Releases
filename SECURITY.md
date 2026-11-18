@@ -3,7 +3,7 @@
 ## Reporting a vulnerability
 
 Please do not open a public issue for security problems. Report them privately through GitHub's
-*Report a vulnerability* feature (Security tab) of the source repository, TerasGuy/EUC-Imager.
+*Report a vulnerability* feature (Security tab) of this repository, ghemed/EUC-Imager-Releases.
 
 ## Handling of secrets
 
